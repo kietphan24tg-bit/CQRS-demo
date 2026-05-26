@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateCamperRequest } from '../dto/request/create-camper-request.dto'
+import { CamperDto } from '../Camper.dto';
 import { CamperSchema } from './camper.schema';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class CamperDtoRepository {
         private readonly camperModel: Model<CamperSchema>
     ) {}
 
-    async findAll(): Promise<CreateCamperRequest[]> {
+    async findAll(): Promise<CamperDto[]> {
         const campers = await this.camperModel.find({}, {}, { lean: true });
         return campers.map(camper => {
             const allergiesLower = camper.allergies.map(allergy =>
